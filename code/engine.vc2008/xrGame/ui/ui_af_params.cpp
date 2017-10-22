@@ -16,21 +16,24 @@ CUIArtefactParams::CUIArtefactParams()
 {
 	for ( u32 i = 0; i < ALife::infl_max_count; ++i )
 	{
-		m_immunity_item[i] = NULL;
+		m_immunity_item[i] = 0;
 	}
 	for ( u32 i = 0; i < ALife::eRestoreTypeMax; ++i )
 	{
-		m_restore_item[i] = NULL;
+		m_restore_item[i] = 0;
 	}
-	m_additional_weight = NULL;
+	m_additional_weight = 0;
+	m_Prop_line = 0;
+	m_refined = 0; // SpikensbroR: Artefact refine
 }
 
 CUIArtefactParams::~CUIArtefactParams()
 {
-	delete_data	( m_immunity_item );
-	delete_data	( m_restore_item );
-	xr_delete	( m_additional_weight );
-	xr_delete	( m_Prop_line );
+	delete_data	(m_immunity_item );
+	delete_data	(m_restore_item );
+	xr_delete	(m_additional_weight );
+	xr_delete	(m_Prop_line );
+	xr_delete	(m_refined); // SpikensbroR: Artefact refine
 }
 
 LPCSTR af_immunity_section_names[] = // ALife::EInfluenceType
@@ -82,6 +85,15 @@ void CUIArtefactParams::InitFromXml( CUIXml& xml )
 	CUIXmlInit::InitWindow( xml, base, 0, this );
 	xml.SetLocalRoot( base_node );
 	
+	// SpikensbroR: Artefact refine
+	m_refined = xr_new<UIArtefactParamItem>();
+	m_refined->Init(xml, "refined");
+	m_refined->SetAutoDelete(false);
+	name = CStringTable().translate("ui_inv_af_refined").c_str();
+	m_refined->SetCaption(name);
+	xml.SetLocalRoot(base_node);
+	// -SpikensbroR
+ 
 	m_Prop_line = xr_new<CUIStatic>();
 	AttachChild( m_Prop_line );
 	m_Prop_line->SetAutoDelete( false );	
@@ -138,7 +150,18 @@ void CUIArtefactParams::SetInfo( shared_str const& af_section )
 	{
 		return;
 	}
-
+	
+	// SpikensbroR: Artefact refine
+	m_refined->SetText(pInvItem.GetRefined()
+		? CStringTable().translate("ui_inv_af_refined_true").c_str()
+		: CStringTable().translate("ui_inv_af_refined_false").c_str());
+	pos.set(m_refined->GetWndPos());
+	pos.y = h;
+	m_refined->SetWndPos(pos);
+	h += m_refined->GetWndSize().y;
+	AttachChild(m_refined);
+	// -SpikensbroR
+ 
 	float val = 0.0f, max_val = 1.0f;
 	Fvector2 pos;
 	float h = m_Prop_line->GetWndPos().y+m_Prop_line->GetWndSize().y;
@@ -278,5 +301,12 @@ void UIArtefactParamItem::SetValue( float value )
 			m_caption->InitTexture( m_texture_minus.c_str() );
 		}
 	}
-
 }
+
+// SpikensbroR: Artefact refine
+void UIArtefactParamItem::SetText(LPCSTR value)
+{
+	SetValue(0.f);
+	m_value->SetText(value);
+}
+// -SpikensbroR

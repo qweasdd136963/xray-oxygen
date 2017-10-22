@@ -91,6 +91,10 @@ class_<CScriptGameObject> script_register_game_object1(class_<CScriptGameObject>
 		.def("cost",						&CScriptGameObject::Cost)
 		.def("condition",					&CScriptGameObject::GetCondition)
 		.def("set_condition",				&CScriptGameObject::SetCondition)
+		// SpikensbroR: Artefact refine
+		.def("refined", 					&CScriptGameObject::GetRefined)
+		.def("set_refined", 				&CScriptGameObject::SetRefined)
+		// -SpikensbroR
 		.def("death_time",					&CScriptGameObject::DeathTime)
 //		.def("armor",						&CScriptGameObject::Armor)
 		.def("max_health",					&CScriptGameObject::MaxHealth)

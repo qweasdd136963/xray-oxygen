@@ -30,7 +30,7 @@ CSE_ALifeInventoryItem::CSE_ALifeInventoryItem(LPCSTR caSection)
 {
 	//������� ��������� ����
 	m_fCondition				= 1.0f;
-
+	m_bRefined 					= 0;
 	m_fMass						= pSettings->r_float(caSection, "inv_weight");
 	m_dwCost					= pSettings->r_u32(caSection, "cost");
 
@@ -85,10 +85,11 @@ void CSE_ALifeInventoryItem::STATE_Write	(NET_Packet &tNetPacket)
 {
 	tNetPacket.w_float			(m_fCondition);
 	save_data					(m_upgrades, tNetPacket);
+	tNetPacket.w_u32			(m_bRefined); // SpikensbroR: Artefact refine
 	State.position				= base()->o_Position;
 }
 
-void CSE_ALifeInventoryItem::STATE_Read		(NET_Packet &tNetPacket, u16 size)
+void CSE_ALifeInventoryItem::STATE_Read(NET_Packet &tNetPacket, u16 size)
 {
 	u16 m_wVersion = base()->m_wVersion;
 	if (m_wVersion > 52)
@@ -99,6 +100,11 @@ void CSE_ALifeInventoryItem::STATE_Read		(NET_Packet &tNetPacket, u16 size)
 		load_data				(m_upgrades, tNetPacket);
 	}
 
+	// SpikensbroR: Artefact refine
+ 	if (m_wVersion > 127)
+ 		tNetPacket.r_u32		(m_bRefined);
+ 	// -SpikensbroR
+ 
 	State.position				= base()->o_Position;
 }
 

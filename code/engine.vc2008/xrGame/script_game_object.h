@@ -184,7 +184,10 @@ public:
 			u32					Cost				() const;
 			float				GetCondition		() const;
 			void				SetCondition		(float val);
-
+	// SpikensbroR: Artefact refine
+			bool 				GetRefined			() const;
+			void 				SetRefined			(bool value);
+	// -SpikensbroR
 	// CEntity
 	_DECLARE_FUNCTION10	(DeathTime	,	u32		);
 	_DECLARE_FUNCTION10	(MaxHealth	,	float	);

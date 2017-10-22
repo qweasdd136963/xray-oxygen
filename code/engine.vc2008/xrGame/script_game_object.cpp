@@ -562,3 +562,29 @@ void CScriptGameObject::set_visual_name						(LPCSTR visual)
 LPCSTR CScriptGameObject::get_visual_name				() const {
 	return object().cNameVisual().c_str();
 }
+
+// SpikensbroR: Artefact refine
+bool CScriptGameObject::GetRefined() const
+{
+	CInventoryItem* inventory_item = smart_cast<CInventoryItem*>(&object());
+	if (!inventory_item)
+	{
+		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "CScriptEntity : cannot access class member GetRefined!");
+		return false;
+	}
+
+	return inventory_item->GetRefined();
+}
+
+void CScriptGameObject::SetRefined(bool value)
+{
+	CInventoryItem* inventory_item = smart_cast<CInventoryItem*>(&object());
+	if (!inventory_item)
+	{
+		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "CScriptEntity : cannot access class member SetRefined!");
+		return;
+	}
+	
+	inventory_item->SetRefined(value);
+}
+// -SpikensbroR

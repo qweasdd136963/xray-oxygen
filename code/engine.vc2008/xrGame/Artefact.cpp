@@ -610,3 +610,23 @@ void CArtefact::OnHiddenItem()
 	SetState(eHidden);
 	SetNextState(eHidden);
 }
+
+// SpikensbroR: Artefact refine
+
+u32 CArtefact::Cost() const
+{
+	if (m_bRefined && g_game_artefact_refine)
+		return m_cost * 2;
+
+	return m_cost;
+}
+
+float CArtefact::Weight() const
+{
+	if (!m_bRefined && g_game_artefact_refine)
+		return m_weight * 10;
+
+	return m_weight;
+}
+
+// -SpikensbroR

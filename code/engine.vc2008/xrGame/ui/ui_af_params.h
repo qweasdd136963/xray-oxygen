@@ -20,7 +20,7 @@ protected:
 	UIArtefactParamItem*	m_immunity_item[ALife::infl_max_count];
 	UIArtefactParamItem*	m_restore_item[ALife::eRestoreTypeMax];
 	UIArtefactParamItem*	m_additional_weight;
-
+	UIArtefactParamItem* 	m_refined; // SpikensbroR: Artefact refine
 	CUIStatic*				m_Prop_line;
 
 }; // class CUIArtefactParams
@@ -33,9 +33,10 @@ public:
 				UIArtefactParamItem	();
 	virtual		~UIArtefactParamItem();
 		
-		void	Init				( CUIXml& xml, LPCSTR section );
-		void	SetCaption			( LPCSTR name );
-		void	SetValue			( float value );
+		void	Init				(CUIXml& xml, LPCSTR section);
+		void	SetCaption			(LPCSTR name);
+		void	SetValue			(float value);
+		void 	SetText				(const char* text);
 	
 private:
 	CUIStatic*	m_caption;

@@ -16,7 +16,7 @@ xr_token							vid_bpp_token							[ ]={
 	{ 0,							0											}
 };
 //-----------------------------------------------------------------------
-
+ENGINE_API int g_game_artefact_refine = 0; // SpikensbroR: Artefact refine
 void IConsole_Command::add_to_LRU( shared_str const& arg )
 {
 	if ( arg.size() == 0 || bEmptyArgsHandled )
@@ -722,7 +722,7 @@ void CCC_Register()
 
 	// Render device states
 	CMD4(CCC_Integer,	"r__supersample",		&ps_r__Supersample,			1,		4		);
-
+	CMD4(CCC_Integer, 	"game_artefact_refine", &g_game_artefact_refine, 0, 1); // SpikensbroR: Artefact refine
 
 	CMD3(CCC_Mask,		"rs_v_sync",			&psDeviceFlags,		rsVSync				);
 //	CMD3(CCC_Mask,		"rs_disable_objects_as_crows",&psDeviceFlags,	rsDisableObjectsAsCrows	);

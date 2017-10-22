@@ -38,7 +38,10 @@ public:
 	virtual void					create_physic_shell				();
 
 	virtual CArtefact*				cast_artefact					()		{return this;}
-
+	// SpikensbroR: Artefact refine
+	virtual	u32 					Cost() const;
+	virtual	float 					Weight() const;
+	// -SpikensbroR
 protected:
 	virtual void					UpdateCLChild					()		{};
 	virtual void					CreateArtefactActivation			();

@@ -641,7 +641,7 @@ bool CUIActorMenu::ToBelt(CUICellItem* itm, bool b_use_cursor_pos)
 			return false;
 
 		CUICellItem* slot_cell				= belt_list->GetCellAt(belt_cell_pos).m_item;
-
+		if (!slot_cell) return false;
 		bool result							= ToBag(slot_cell, false);
 		VERIFY								(result);
 

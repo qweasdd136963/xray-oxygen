@@ -1008,7 +1008,9 @@ bool CInventory::CanPutInBelt(PIItem pIItem)
 	if(!m_bBeltUseful)					return false;
 	if(!pIItem || !pIItem->Belt())		return false;
 	if(m_belt.size() >= BeltWidth())	return false;
-
+// SpikensbroR: Artefact refine
+	if (!pIItem->GetRefined() && g_game_artefact_refine)
+		return false;
 	return FreeRoom_inBelt(m_belt, pIItem, BeltWidth(), 1);
 }
 //проверяет можем ли поместить вещь в рюкзак,
